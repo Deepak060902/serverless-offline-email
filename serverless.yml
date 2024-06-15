@@ -1,0 +1,27 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: deepak098
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: my-service
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    GMAIL_USER: ${env:GMAIL_USER}
+    GMAIL_PASS: ${env:GMAIL_PASS}
+
+plugins:
+  - serverless-offline
+
+functions:
+  sendEmail:
+    handler: handler.send_email
+    events:
+      - http:
+          path: send-email
+          method: post
+
+custom:
+  serverless-offline:
+    port: 3000
+
